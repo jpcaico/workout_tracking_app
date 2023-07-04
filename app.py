@@ -187,7 +187,7 @@ def register_weight_workout():
                                    session_time=session_time,
                                    training_data=exercises)
         st.write("Weight Workout registered successfully.")
-        st.write("Exercises:", exercises)
+       # st.write("Exercises:", exercises)
 
 
 
@@ -268,7 +268,7 @@ def workout_management_tab():
             delete_weight_workout()
 
 # Main app
-st.title("Discipulos do FEROMOX")
+#st.title("Discipulos do FEROMOX")
 # Create tabs
 tabs = ["User Management", "Workout Management"]
 selected_tab = st.sidebar.radio("Select a tab", tabs)

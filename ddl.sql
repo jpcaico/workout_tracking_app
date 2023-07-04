@@ -174,6 +174,7 @@ VALUES
   ('Dumbbell Incline Row', 'Back, Biceps'),
   ('Dumbbell Pullover', 'Back, Chest'),
   ('Dumbbell Row', 'Back, Biceps'),
+  ('Reverse Fly Machine', 'Back'),
   ('Dumbbell Shrug', 'Traps'),
   ('Hammer Strength High Row', 'Back, Biceps'),
   ('Hyperextension', 'Back, Glutes, Hamstrings'),
@@ -201,7 +202,8 @@ VALUES
   ('V-Bar Pulldown', 'Back, Biceps'),
   ('Wide-Grip Cable Pulldown', 'Back, Biceps'),
   ('Wide-Grip Lat Pulldown', 'Back, Biceps'),
-  ('Wide-Grip Pulldown (Behind the Neck)', 'Back, Biceps');
+  ('Wide-Grip Pulldown (Behind the Neck)', 'Back, Biceps')
+  ;
 
 
 INSERT INTO Exercises (exercise_name, body_part)
@@ -283,6 +285,7 @@ VALUES
   ('Kettlebell Lunge', 'Quadriceps, Glutes, Hamstrings'),
   ('Kettlebell Swing', 'Glutes, Hamstrings'),
   ('Leg Curl', 'Hamstrings'),
+  ('Leg Stiff', 'Glutes, Hamstrings'),
   ('Leg Extension', 'Quadriceps'),
   ('Leg Press', 'Quadriceps, Glutes, Hamstrings'),
   ('Romanian Deadlift', 'Hamstrings, Glutes'),
