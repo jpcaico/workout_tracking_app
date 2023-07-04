@@ -1,0 +1,358 @@
+CREATE TABLE Workouts (
+  workout_id SERIAL PRIMARY KEY,
+  timestamp TIMESTAMP NOT NULL,
+  training_type VARCHAR(20) NOT NULL,
+  session_time INTEGER
+);
+
+CREATE TABLE Exercises (
+  exercise_id SERIAL PRIMARY KEY,
+  exercise_name VARCHAR(50),
+  body_part VARCHAR(50)
+);
+
+
+CREATE TABLE AerobicActivities (
+  activity_id SERIAL PRIMARY KEY,
+  activity_name VARCHAR(50)
+);
+
+
+CREATE TABLE WeightTraining (
+  weight_training_id SERIAL PRIMARY KEY,
+  workout_id INTEGER REFERENCES Workouts(workout_id),
+  exercise_id INTEGER REFERENCES Exercises(exercise_id),
+  sets INTEGER,
+  repetitions_per_set INTEGER,
+  weight FLOAT,
+  rest_time FLOAT,
+  rpe_exercise VARCHAR(20),
+  rpe_overall VARCHAR(20)
+);
+
+CREATE TABLE AerobicTraining (
+  aerobic_training_id SERIAL PRIMARY KEY,
+  workout_id INTEGER REFERENCES Workouts(workout_id),
+  activity_id INTEGER REFERENCES AerobicActivities(activity_id),
+  training_type VARCHAR(20),
+  is_hiit BOOLEAN,
+  avg_speed FLOAT,
+  max_speed FLOAT,
+  lowest_speed FLOAT,
+  resistance_level FLOAT,
+  rpe_overall VARCHAR(20)
+);
+
+
+CREATE TABLE Users (
+  user_id SERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  age INTEGER,
+  weight FLOAT,
+  height FLOAT,
+  bodyfat FLOAT
+);
+
+ALTER TABLE Workouts
+ADD COLUMN user_id INTEGER REFERENCES Users(user_id);
+
+---- 
+-- INSERTING DATA ---
+
+INSERT INTO AerobicActivities (activity_name)
+VALUES ('Outdoor Running'),
+       ('Treadmill Running'),
+       ('Stationary Biking'),
+       ('Stationary Seated Biking'),
+       ('Elliptical'),
+       ('Stair Climber'),
+       ('Rowing Machine'),
+       ('Boxing');
+
+INSERT INTO Exercises (exercise_name, body_part)
+VALUES
+  ('Barbell Bench Press', 'Chest, Shoulders, Triceps'),
+  ('Barbell Floor Press', 'Chest, Triceps'),
+  ('Barbell Guillotine Bench Press', 'Chest, Shoulders, Triceps'),
+  ('Barbell Incline Bench Press', 'Upper Chest, Shoulders, Triceps'),
+  ('Barbell Incline Fly', 'Upper Chest, Shoulders'),
+  ('Barbell Pullover', 'Chest, Back, Triceps'),
+  ('Barbell Triceps Extension', 'Triceps'),
+  ('Cable Crossover', 'Chest'),
+  ('Chest Dip', 'Chest, Shoulders, Triceps'),
+  ('Decline Dumbbell Bench Press', 'Lower Chest, Shoulders, Triceps'),
+  ('Decline Dumbbell Fly', 'Lower Chest, Shoulders'),
+  ('Dumbbell Bench Press', 'Chest, Shoulders, Triceps'),
+  ('Dumbbell Fly', 'Chest, Shoulders'),
+  ('Dumbbell Guillotine Bench Press', 'Chest, Shoulders, Triceps'),
+  ('Dumbbell Incline Bench Press', 'Upper Chest, Shoulders, Triceps'),
+  ('Dumbbell Incline Fly', 'Upper Chest, Shoulders'),
+  ('Dumbbell Pullover', 'Chest, Back, Triceps'),
+  ('Dumbbell Triceps Extension', 'Triceps'),
+  ('Flat Bench Cable Fly', 'Chest, Shoulders'),
+  ('Hammer Strength Chest Press', 'Chest, Shoulders, Triceps'),
+  ('Incline Barbell Bench Press', 'Upper Chest, Shoulders, Triceps'),
+  ('Incline Cable Fly', 'Upper Chest, Shoulders'),
+  ('Incline Dumbbell Bench Press', 'Upper Chest, Shoulders, Triceps'),
+  ('Incline Dumbbell Fly', 'Upper Chest, Shoulders'),
+  ('Incline Smith Machine Bench Press', 'Upper Chest, Shoulders, Triceps'),
+  ('Incline Smith Machine Fly', 'Upper Chest, Shoulders'),
+  ('Incline Triceps Extension', 'Triceps'),
+  ('Machine Chest Press', 'Chest, Shoulders, Triceps'),
+  ('Machine Fly', 'Chest, Shoulders'),
+  ('Parallel Bar Dip', 'Chest, Shoulders, Triceps'),
+  ('Push-Up', 'Chest, Shoulders, Triceps'),
+  ('Seated Chest Press Machine', 'Chest, Shoulders, Triceps'),
+  ('Smith Machine Bench Press', 'Chest, Shoulders, Triceps'),
+  ('Smith Machine Incline Bench Press', 'Upper Chest, Shoulders, Triceps'),
+  ('Smith Machine Incline Fly', 'Upper Chest, Shoulders'),
+  ('Smith Machine Parallel Bar Dip', 'Chest, Shoulders, Triceps'),
+  ('Smith Machine Pullover', 'Chest, Back, Triceps'),
+  ('Smith Machine Triceps Extension', 'Triceps'),
+  ('Standing Cable Crossover', 'Chest'),
+  ('Swiss Ball Dumbbell Fly', 'Chest, Shoulders'),
+  ('Swiss Ball Push-Up', 'Chest, Shoulders, Triceps'),
+  ('Wide-Grip Decline Barbell Bench Press', 'Lower Chest, Shoulders, Triceps');
+
+
+INSERT INTO Exercises (exercise_name, body_part)
+VALUES
+  ('L', 'Shoulders, Upper Back'),
+  ('Cable Lateral Raise', 'Shoulders'),
+  ('Cable Rear Delt Fly', 'Shoulders, Upper Back'),
+  ('Dumbbell Front Raise', 'Shoulders'),
+  ('Dumbbell Lateral Raise', 'Shoulders'),
+  ('Dumbbell Overhead Press', 'Shoulders, Triceps'),
+  ('Dumbbell Rear Delt Fly', 'Shoulders, Upper Back'),
+  ('Dumbbell Shrugs', 'Traps'),
+  ('Dumbbell Upright Row', 'Shoulders, Traps, Biceps'),
+  ('Incline Dumbbell Front Raise', 'Shoulders'),
+  ('Incline Dumbbell Lateral Raise', 'Shoulders'),
+  ('Incline Dumbbell Rear Delt Fly', 'Shoulders, Upper Back'),
+  ('Incline Dumbbell Shoulder Press', 'Shoulders, Triceps'),
+  ('Kettlebell Overhead Press', 'Shoulders, Triceps'),
+  ('Kettlebell Push Press', 'Shoulders, Triceps'),
+  ('Kettlebell Upright Row', 'Shoulders, Traps, Biceps'),
+  ('Lateral Raise Machine', 'Shoulders'),
+  ('Machine Shoulder Press', 'Shoulders, Triceps'),
+  ('Machine Rear Delt Fly', 'Shoulders, Upper Back'),
+  ('Military Press', 'Shoulders, Triceps'),
+  ('Overhead Dumbbell Shrug', 'Traps'),
+  ('Overhead Press Machine', 'Shoulders, Triceps'),
+  ('Push Press', 'Shoulders, Triceps'),
+  ('Rear Delt Cable Fly', 'Shoulders, Upper Back'),
+  ('Seated Dumbbell Overhead Press', 'Shoulders, Triceps'),
+  ('Seated Dumbbell Shrug', 'Traps'),
+  ('Seated Overhead Press Machine', 'Shoulders, Triceps'),
+  ('Seated Shoulder Press Machine', 'Shoulders, Triceps'),
+  ('Single-Arm Cable Lateral Raise', 'Shoulders'),
+  ('Single-Arm Dumbbell Shoulder Press', 'Shoulders, Triceps'),
+  ('Single-Arm Kettlebell Press', 'Shoulders, Triceps'),
+  ('Single-Arm Kettlebell Upright Row', 'Shoulders, Traps, Biceps'),
+  ('Smith Machine Overhead Press', 'Shoulders, Triceps'),
+  ('Smith Machine Upright Row', 'Shoulders, Traps, Biceps'),
+  ('Standing Dumbbell Overhead Press', 'Shoulders, Triceps'),
+  ('Standing Dumbbell Shrug', 'Traps'),
+  ('Standing Overhead Press Machine', 'Shoulders, Triceps'),
+  ('Standing Shoulder Press', 'Shoulders, Triceps'),
+  ('Standing Shoulder Shrug', 'Traps'),
+  ('Upright Cable Row', 'Shoulders, Traps, Biceps'),
+  ('Upright Row Machine', 'Shoulders, Traps, Biceps');
+
+
+INSERT INTO Exercises (exercise_name, body_part)
+VALUES
+  ('Barbell Bent-Over Row', 'Back, Biceps'),
+  ('Barbell Deadlift', 'Back, Glutes, Hamstrings'),
+  ('Barbell Good Morning', 'Back, Glutes, Hamstrings'),
+  ('Barbell Shrug', 'Traps'),
+  ('Bent-Arm Dumbbell Pullover', 'Back, Chest'),
+  ('Bent-Over Dumbbell Row', 'Back, Biceps'),
+  ('Cable Pulldown', 'Back, Biceps'),
+  ('Cable Seated Row', 'Back, Biceps'),
+  ('Dumbbell Deadlift', 'Back, Glutes, Hamstrings'),
+  ('Dumbbell Incline Row', 'Back, Biceps'),
+  ('Dumbbell Pullover', 'Back, Chest'),
+  ('Dumbbell Row', 'Back, Biceps'),
+  ('Dumbbell Shrug', 'Traps'),
+  ('Hammer Strength High Row', 'Back, Biceps'),
+  ('Hyperextension', 'Back, Glutes, Hamstrings'),
+  ('Incline Bench Dumbbell Row', 'Back, Biceps'),
+  ('Lat Pulldown', 'Back, Biceps'),
+  ('Lat Pulldown (Wide Grip)', 'Back, Biceps'),
+  ('Lat Pulldown (Reverse Grip)', 'Back, Biceps'),
+  ('Machine Back Extension', 'Back, Glutes, Hamstrings'),
+  ('Machine Seated Row', 'Back, Biceps'),
+  ('One-Arm Dumbbell Row', 'Back, Biceps'),
+  ('Pull-Up', 'Back, Biceps'),
+  ('Pull-Up (Close Grip)', 'Back, Biceps'),
+  ('Pull-Up (Wide Grip)', 'Back, Biceps'),
+  ('Reverse-Grip Cable Pulldown', 'Back, Biceps'),
+  ('Reverse-Grip Pulldown', 'Back, Biceps'),
+  ('Seated Cable Row', 'Back, Biceps'),
+  ('Seated Dumbbell Shrug', 'Traps'),
+  ('Smith Machine Bent-Over Row', 'Back, Biceps'),
+  ('Smith Machine Inverted Row', 'Back, Biceps'),
+  ('Smith Machine Shrug', 'Traps'),
+  ('Straight-Arm Pulldown', 'Back, Lats'),
+  ('T-Bar Row', 'Back, Biceps'),
+  ('Underhand Cable Pulldown', 'Back, Biceps'),
+  ('Underhand Seated Row', 'Back, Biceps'),
+  ('V-Bar Pulldown', 'Back, Biceps'),
+  ('Wide-Grip Cable Pulldown', 'Back, Biceps'),
+  ('Wide-Grip Lat Pulldown', 'Back, Biceps'),
+  ('Wide-Grip Pulldown (Behind the Neck)', 'Back, Biceps');
+
+
+INSERT INTO Exercises (exercise_name, body_part)
+VALUES
+  ('Barbell Biceps Curl', 'Biceps'),
+  ('Barbell Preacher Curl', 'Biceps'),
+  ('Barbell Triceps Extension', 'Triceps'),
+  ('Cable Biceps Curl', 'Biceps'),
+  ('Cable Triceps Extension', 'Triceps'),
+  ('Concentration Curl', 'Biceps'),
+  ('Cross-Body Dumbbell Hammer Curl', 'Biceps'),
+  ('Cross-Body Hammer Curl', 'Biceps'),
+  ('Dumbbell Biceps Curl', 'Biceps'),
+  ('Dumbbell Hammer Curl', 'Biceps'),
+  ('Dumbbell Preacher Curl', 'Biceps'),
+  ('Dumbbell Triceps Extension', 'Triceps'),
+  ('EZ Bar Biceps Curl', 'Biceps'),
+  ('EZ Bar Preacher Curl', 'Biceps'),
+  ('EZ Bar Skull Crusher', 'Triceps'),
+  ('EZ Bar Triceps Extension', 'Triceps'),
+  ('Hammer Curl', 'Biceps'),
+  ('Incline Dumbbell Curl', 'Biceps'),
+  ('Incline Dumbbell Triceps Extension', 'Triceps'),
+  ('Lying Triceps Extension', 'Triceps'),
+  ('Machine Biceps Curl', 'Biceps'),
+  ('Machine Preacher Curl', 'Biceps'),
+  ('Machine Triceps Extension', 'Triceps'),
+  ('Overhead Cable Triceps Extension', 'Triceps'),
+  ('Overhead Dumbbell Triceps Extension', 'Triceps'),
+  ('Preacher Curl Machine', 'Biceps'),
+  ('Reverse Barbell Curl', 'Forearms'),
+  ('Reverse Dumbbell Curl', 'Forearms'),
+  ('Reverse EZ Bar Curl', 'Forearms'),
+  ('Rope Triceps Pushdown', 'Triceps'),
+  ('Seated Dumbbell Curl', 'Biceps'),
+  ('Seated Hammer Curl', 'Biceps'),
+  ('Seated Triceps Press', 'Triceps'),
+  ('Single-Arm Cable Curl', 'Biceps'),
+  ('Single-Arm Dumbbell Preacher Curl', 'Biceps'),
+  ('Single-Arm Dumbbell Triceps Extension', 'Triceps'),
+  ('Spider Curl', 'Biceps'),
+  ('Standing Barbell Curl', 'Biceps'),
+  ('Standing Dumbbell Curl', 'Biceps'),
+  ('Standing EZ Bar Curl', 'Biceps'),
+  ('Standing Overhead Barbell Triceps Extension', 'Triceps'),
+  ('Standing Overhead Dumbbell Triceps Extension', 'Triceps'),
+  ('Triceps Dip', 'Triceps'),
+  ('Triceps Pushdown', 'Triceps'),
+  ('V-Bar Triceps Pushdown', 'Triceps'),
+  ('Wrist Curl', 'Forearms'),
+  ('Wrist Roller', 'Forearms'),
+  ('Zottman Curl', 'Biceps, Forearms');
+
+
+INSERT INTO Exercises (exercise_name, body_part)
+VALUES
+  ('Barbell Box Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Barbell Bulgarian Split Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Barbell Deadlift', 'Quadriceps, Glutes, Hamstrings'),
+  ('Barbell Front Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Barbell Hack Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Barbell Lunge', 'Quadriceps, Glutes, Hamstrings'),
+  ('Barbell Step-Up', 'Quadriceps, Glutes, Hamstrings'),
+  ('Cable Hip Abduction', 'Glutes, Outer Thighs'),
+  ('Cable Hip Adduction', 'Inner Thighs'),
+  ('Cable Pull Through', 'Glutes, Hamstrings'),
+  ('Cable Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Dumbbell Box Step-Up', 'Quadriceps, Glutes, Hamstrings'),
+  ('Dumbbell Bulgarian Split Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Dumbbell Deadlift', 'Quadriceps, Glutes, Hamstrings'),
+  ('Dumbbell Front Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Dumbbell Lateral Lunge', 'Quadriceps, Glutes, Hamstrings'),
+  ('Dumbbell Lunging Hip Hinge', 'Quadriceps, Glutes, Hamstrings'),
+  ('Dumbbell Split Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Dumbbell Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Glute Bridge', 'Glutes, Hamstrings'),
+  ('Hip Thrust', 'Glutes, Hamstrings'),
+  ('Kettlebell Goblet Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Kettlebell Lunge', 'Quadriceps, Glutes, Hamstrings'),
+  ('Kettlebell Swing', 'Glutes, Hamstrings'),
+  ('Leg Curl', 'Hamstrings'),
+  ('Leg Extension', 'Quadriceps'),
+  ('Leg Press', 'Quadriceps, Glutes, Hamstrings'),
+  ('Romanian Deadlift', 'Hamstrings, Glutes'),
+  ('Seated Leg Curl', 'Hamstrings'),
+  ('Smith Machine Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Split Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Step-Up', 'Quadriceps, Glutes, Hamstrings'),
+  ('Sumo Deadlift', 'Quadriceps, Glutes, Hamstrings'),
+  ('Swiss Ball Hip Thrust', 'Glutes, Hamstrings'),
+  ('Swiss Ball Leg Curl', 'Hamstrings'),
+  ('Trap Bar Deadlift', 'Quadriceps, Glutes, Hamstrings'),
+  ('Wall Sit', 'Quadriceps, Glutes'),
+   ('Bulgarian Split Squat with Dumbbells', 'Quadriceps, Glutes, Hamstrings'),
+  ('Calf Raise', 'Calves'),
+  ('Dumbbell Step-Up', 'Quadriceps, Glutes, Hamstrings'),
+  ('Dumbbell Walking Lunge', 'Quadriceps, Glutes, Hamstrings'),
+  ('Goblet Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Hip Abductor Machine', 'Outer Thighs'),
+  ('Hip Adductor Machine', 'Inner Thighs'),
+  ('Jump Squats', 'Quadriceps, Glutes, Hamstrings'),
+  ('Leg Press Machine', 'Quadriceps, Glutes, Hamstrings'),
+  ('Pistol Squat', 'Quadriceps, Glutes, Hamstrings'),
+  ('Resistance Band Squats', 'Quadriceps, Glutes, Hamstrings'),
+  ('Smith Machine Lunge', 'Quadriceps, Glutes, Hamstrings'),
+  ('Walking Lunges', 'Quadriceps, Glutes, Hamstrings');
+
+
+  INSERT INTO Exercises (exercise_name, body_part)
+VALUES
+  ('Barbell Calf Raise', 'Calves'),
+  ('Calf Press on Leg Press Machine', 'Calves'),
+  ('Calf Press on Smith Machine', 'Calves'),
+  ('Donkey Calf Raise', 'Calves'),
+  ('Dumbbell Calf Raise', 'Calves'),
+  ('Machine Standing Calf Raise', 'Calves'),
+  ('Seated Calf Raise', 'Calves'),
+  ('Seated Calf Raise on Leg Press Machine', 'Calves'),
+  ('Seated Dumbbell Calf Raise', 'Calves'),
+  ('Single-Leg Calf Press on Leg Press Machine', 'Calves'),
+  ('Standing Calf Raise', 'Calves'),
+  ('Standing Dumbbell Calf Raise', 'Calves'),
+  ('Standing Dumbbell Calf Raise on Elevated Surface', 'Calves'),
+  ('Standing Machine Calf Raise', 'Calves'),
+  ('Standing Single-Leg Calf Raise', 'Calves');
+
+
+INSERT INTO Exercises (exercise_name, body_part)
+VALUES
+  ('Russian Twists', 'Obliques, Transverse abdominis'),
+  ('Bicycle Crunches', 'Rectus abdominis, Obliques'),
+  ('Side Plank', 'Obliques, Transverse abdominis'),
+  ('Plank', 'Rectus abdominis, Obliques, Transverse abdominis'),
+  ('Woodchoppers', 'Obliques, Rectus abdominis'),
+  ('Standing Oblique Crunches', 'Obliques, Rectus abdominis'),
+  ('Seated Russian Twists', 'Obliques, Transverse abdominis'),
+  ('Hanging Leg Raises', 'Rectus abdominis, Obliques'),
+  ('Captain''s Chair Leg Raises', 'Rectus abdominis, Obliques'),
+  ('Side Jackknife', 'Obliques, Transverse abdominis'),
+  ('Reverse Crunches', 'Rectus abdominis, Obliques'),
+  ('Standing Side Bends', 'Obliques'),
+  ('Hanging Knee Raises', 'Rectus abdominis, Obliques'),
+  ('Lying Leg Raises', 'Rectus abdominis, Hip flexors'),
+  ('V-Ups', 'Rectus abdominis, Obliques'),
+  ('Flutter Kicks', 'Rectus abdominis, Hip flexors'),
+  ('Scissor Kicks', 'Rectus abdominis, Hip flexors'),
+  ('Dead Bug', 'Rectus abdominis, Transverse abdominis'),
+  ('Swiss Ball Leg Raises', 'Rectus abdominis, Obliques'),
+  ('Plank Leg Raises', 'Rectus abdominis, Obliques'),
+  ('Side Plank Leg Raises', 'Obliques, Transverse abdominis'),
+  ('Russian Twist with Medicine Ball', 'Obliques, Transverse abdominis'),
+  ('Hanging Knee Tucks', 'Rectus abdominis, Obliques'),
+  ('Lying Windshield Wipers', 'Rectus abdominis, Obliques');
+
